@@ -3,16 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import dynamodbConfiguration from './config/dynamodb.configuration';
+import { DynamoDBModule } from './dynamodb/dynamodb.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      load: [dynamodbConfiguration],
-      isGlobal: true,
-    }),
-    UsersModule,
-  ],
+  imports: [ConfigModule.forRoot(), DynamoDBModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
