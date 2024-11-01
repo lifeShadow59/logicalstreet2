@@ -8,6 +8,7 @@ import {
   Param,
   HttpStatus,
   HttpCode,
+  UsePipes,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../dto';
+import { UserValidationPipe } from 'src/common/pipes/user-validation.pipe';
 
 @ApiTags('users')
 @Controller('users')
@@ -40,6 +42,7 @@ export class UsersController {
   @ApiConflictResponse({
     description: 'Email already exists.',
   })
+  @UsePipes(new UserValidationPipe())
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<UserResponseDto> {

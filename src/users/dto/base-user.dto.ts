@@ -1,5 +1,15 @@
-import { IsString, IsEmail, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsDateString,
+  Length,
+  Matches,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsAdult,
+  IsNotFutureDate,
+} from '../../common/decorators/custom-validators';
 
 export class BaseUserDto {
   @ApiProperty({
@@ -9,6 +19,10 @@ export class BaseUserDto {
     maxLength: 100,
   })
   @IsString()
+  @Length(2, 100, { message: 'Name must be between 2 and 100 characters' })
+  @Matches(/^[a-zA-Z\s-']+$/, {
+    message: 'Name can only contain letters, spaces, hyphens, and apostrophes',
+  })
   name: string;
 
   @ApiProperty({
@@ -16,14 +30,19 @@ export class BaseUserDto {
     example: 'john.doe@example.com',
     format: 'email',
   })
-  @IsEmail()
+  @IsEmail({}, { message: 'Please provide a valid email address' })
   email: string;
 
   @ApiProperty({
-    description: 'The date of birth of the user',
+    description: 'The date of birth of the user (must be 18 or older)',
     example: '1990-01-01',
     format: 'date',
   })
-  @IsDateString()
+  @IsDateString(
+    {},
+    { message: 'Please provide a valid date in YYYY-MM-DD format' },
+  )
+  @IsAdult(18, { message: 'User must be at least 18 years old' })
+  @IsNotFutureDate({ message: 'Date of birth cannot be in the future' })
   dob: string;
 }
