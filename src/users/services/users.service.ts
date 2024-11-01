@@ -4,9 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { DynamoDBService } from './dynamodb.service';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UserResponseDto } from '../dto/user-response.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../dto';
 
 @Injectable()
 export class UsersService {
