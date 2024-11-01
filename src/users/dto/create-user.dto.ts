@@ -1,12 +1,3 @@
-import { IsString, IsEmail, IsDateString, IsOptional } from 'class-validator';
+import { BaseUserDto } from './base-user.dto';
 
-export class CreateUserDto {
-  @IsString()
-  name: string;
-
-  @IsEmail()
-  email: string;
-
-  @IsDateString()
-  dob: string;
-}
+export class CreateUserDto extends BaseUserDto {}
