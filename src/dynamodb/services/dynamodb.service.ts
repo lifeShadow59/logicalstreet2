@@ -29,9 +29,7 @@ export class DynamoDBService implements OnModuleInit {
   }
 
   async onModuleInit() {
-    if (this.configService.get('NODE_ENV') !== 'production') {
-      await this.ensureTableExists();
-    }
+  await this.ensureTableExists();
   }
 
   private async ensureTableExists() {
